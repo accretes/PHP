@@ -1,0 +1,40 @@
+.btn {
+    margin-top: 30px;
+}
+
+#header {
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+table {
+    border-collapse: collapse;
+}
+td, th {
+    padding: 10px;
+}
+td, #id {
+    width: auto;
+    height: 2rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+td {
+    padding: 10px;
+}
+#id {
+    background: lightblue;
+    border-color: white;
+}
+#options {
+    background: NavajoWhite;
+    border-color: white;
+    text-align: center;
+}
+body {
+    padding: 1rem;
+}
