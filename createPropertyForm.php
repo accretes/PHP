@@ -20,6 +20,8 @@ require 'ensureUserLoggedIn.php';
         <div class="container">
             <?php require 'toolbar.php'; ?>
             <h1 id="header">Create Property Form</h1>
+            
+            
             <?php
             if (isset ($errorMessage)) {
                 echo '<p>Error: ' . $errorMessage . '</p>';
