@@ -59,7 +59,7 @@ require 'ensureUserLoggedIn.php';
                             </td>
                         </tr>
                         <tr>
-                            <td>Rent</td>
+                            <td>Rent</td> <!-- hello -->
                             <td>
                                 <input type="text" name="Property_Rent" value="" />
                                 <span id="rentError" class="error">
