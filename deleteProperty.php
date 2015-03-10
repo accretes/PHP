@@ -1,5 +1,4 @@
 <?php
-require_once 'property.php';
 require_once 'Connection.php';
 require_once 'PropertyTableGateway.php';
 

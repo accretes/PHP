@@ -23,6 +23,7 @@ class TenantTableGateway {
         return $statement;
     }
     
+    
     public function getTenantsById($id) {
         $sqlQuery = "SELECT * FROM tenants WHERE Tenant_ID = :id";
         
@@ -40,9 +41,9 @@ class TenantTableGateway {
         return $statement;
     }
     
-    public function insertTenant($fN, $lN, $a, $g, $e, $p, $pId, $l) {
+    public function insertTenant($fN, $lN, $a, $g, $e, $p, $pId, $lId) {
         $sqlQuery = "INSERT INTO tenants " .
-                "Tenant_fName, Tenant_lName, Tenant_Age, Tenant_Gender, Tenant_Email, Tenant_Phone, Property_ID, Lease_ID " .
+                "(Tenant_fName, Tenant_lName, Tenant_Age, Tenant_Gender, Tenant_Email, Tenant_Phone, Property_ID, Lease_ID) " .
                 "VALUES (:fName, :lName, :age, :gender, :email, :phone, :propertyid, :leaseid)";
         
         $statement = $this->connection->prepare($sqlQuery);
@@ -54,13 +55,12 @@ class TenantTableGateway {
             "email" => $e,
             "phone" => $p, 
             "propertyid" => $pId, 
-            "leaseid" => $l
-        );
-        
+            "leaseid" => $lId
+        );  
+                
         echo '<pre>';
         print_r($params);
         echo '</pre>';
-                
         
         $status = $statement->execute($params);
         
@@ -90,7 +90,7 @@ class TenantTableGateway {
         return $statement;
     }
     
-    public function updateTenant($fN, $lN, $a, $g, $e, $p, $pId, $l) {
+    public function updateTenant($id, $fN, $lN, $a, $g, $e, $p, $pId, $l) {
         $sqlQuery = "UPDATE tenants SET " .
                 "Tenant_fName = :fName, " .
                 "Tenant_lName = :lName, " . 
@@ -99,7 +99,8 @@ class TenantTableGateway {
                 "Tenant_Email = :email, " . 
                 "Tenant_Phone = :phone, " . 
                 "Property_ID = :propertyid, " . 
-                "Lease_ID = :leaseid";
+                "Lease_ID = :leaseid " .
+                "WHERE Tenant_ID = :id";
         
         $statement = $this->connection->prepare($sqlQuery);
         
@@ -111,7 +112,8 @@ class TenantTableGateway {
             "email" => $e,
             "phone" => $p, 
             "propertyid" => $pId, 
-            "leaseid" => $l
+            "leaseid" => $l,
+            "id" => $id
         );
         
 //        echo '<pre>';
