@@ -25,12 +25,12 @@ class tenant {
     }
     
     public function getTenantID() { return $this->id; }
-    public function getFirstName() { return $this->fName = $fn; }
-    public function getLastName() { return $this->fName = $ln; }
-    public function getAge() { return $this->age = $a; }
-    public function getGender() { return $this->gender = $g; }
-    public function getEmail() { return $this->email = $e; }
-    public function getPhone() { return $this->phone = $p; }
-    public function getPropertyID() { return $this->pId = $pid; }
-    public function getLeaseID() { return $this->lId =$l; }
+    public function getFirstName() { return $this->fName; }
+    public function getLastName() { return $this->fName; }
+    public function getAge() { return $this->age; }
+    public function getGender() { return $this->gender; }
+    public function getEmail() { return $this->email; }
+    public function getPhone() { return $this->phone; }
+    public function getPropertyID() { return $this->pId; }
+    public function getLeaseID() { return $this->lId; }
 }
