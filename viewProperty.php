@@ -1,8 +1,6 @@
 <?php
-require_once 'property.php';
 require_once 'Connection.php';
 require_once 'PropertyTableGateway.php';
-
 require 'ensureUserLoggedIn.php';
 
 $id = session_id();
