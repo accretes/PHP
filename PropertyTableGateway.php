@@ -11,7 +11,9 @@ class PropertyTableGateway {
     }
     
     public function getProperties() {
-        $sqlQuery = "SELECT * FROM properties";
+        $sqlQuery = "SELECT p.*, t.Tenant_fName + ' ' + Tenant_lName as Tenant_Name"
+                . "FROM properties p "
+                . "LEFT JOIN tenants t ON t.Tenant_ID = p.Tenant_ID";
         
         $statement = $this->connection->prepare($sqlQuery);
         $status = $statement->execute();
@@ -37,7 +39,10 @@ class PropertyTableGateway {
     }
     
     public function getPropertyById($id) {
-        $sqlQuery = "SELECT * FROM properties WHERE Property_ID = :id";
+        $sqlQuery = "SELECT p.*, t.Tenant_fName + ' ' + Tenant_lName as Tenant_Name"
+                . "FROM properties p "
+                . "LEFT JOIN tenants t ON t.Tenant_ID = p.Tenant_ID "
+                . "WHERE p.Property_ID = :id";
         
         $statement = $this->connection->prepare($sqlQuery);
         $params = array(
@@ -53,17 +58,18 @@ class PropertyTableGateway {
         return $statement;
     }
     
-    public function insertProperty($a, $d, $r, $b) {
+    public function insertProperty($a, $d, $r, $b, $tId) {
         $sqlQuery = "INSERT INTO properties " .
-                "(Property_Address, Property_Description, Property_Rent, Property_NoOfRooms) " .
-                "VALUES (:address, :description, :rent, :bedrooms)";
+                "(Property_Address, Property_Description, Property_Rent, Property_NoOfRooms, Tenant_ID) " .
+                "VALUES (:address, :description, :rent, :bedrooms, :tenantId)";
         
         $statement = $this->connection->prepare($sqlQuery);
         $params = array(
             "address" => $a,
             "description" => $d,
             "rent" => $r, 
-            "bedrooms" => $b
+            "bedrooms" => $b,
+            "tenantId" => $tId
         );
         
         echo '<pre>';
@@ -99,12 +105,13 @@ class PropertyTableGateway {
         return $statement;
     }
     
-    public function updateProperty($id, $a, $d, $r, $b) {
+    public function updateProperty($id, $a, $d, $r, $b, $tId) {
         $sqlQuery = "UPDATE properties SET " .
                 "Property_Address = :address, " .
                 "Property_Description = :description, " . 
                 "Property_Rent = :rent, " . 
-                "Property_NoOfRooms = :bedrooms " .
+                "Property_NoOfRooms = :bedrooms, " .
+                "Tenant_ID = :tenantId " .
                 "WHERE Property_ID = :id";
         
         $statement = $this->connection->prepare($sqlQuery);
@@ -113,6 +120,7 @@ class PropertyTableGateway {
             "description" => $d,
             "rent" => $r, 
             "bedrooms" => $b,
+            "tenantId" => $tId,
             "id" => $id
         );
         

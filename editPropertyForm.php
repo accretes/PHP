@@ -1,6 +1,7 @@
 <?php
 require_once 'Connection.php';
 require_once 'PropertyTableGateway.php';
+require_once 'TenantTableGateway.php';
 
 $sessionId = session_id();
 if ($sessionId == "") {
@@ -16,12 +17,15 @@ $id = $_GET['id'];
 
 $connection = Connection::getInstance();
 $gateway = new PropertyTableGateway($connection);
+$tenantGateway = new TenantTableGateway($connection);
 
-$statement = $gateway->getPropertyById($id);
+$properties = $gateway->getPropertyById($id);
 if ($statement->rowCount() !== 1) {
     die("Illegal request");
 }
-$row = $statement->fetch(PDO::FETCH_ASSOC);
+$property = $properties->fetch(PDO::FETCH_ASSOC);
+
+$tenants = $tenantGateway->getTenants();
 ?>
 <!DOCTYPE>
 <html>
@@ -39,6 +43,7 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
     
     <body>
         <?php require 'toolbar.php'; ?>
+        <?php require 'mainMenu.php'; ?>
         <h1>Edit Property Form</h1>
         <?php
         if (isset ($errorMessage)) {
@@ -121,6 +126,25 @@ $row = $statement->fetch(PDO::FETCH_ASSOC);
                                 }
                                 ?>
                             </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tenant</td>
+                        <td>
+                            <select name="Tenant_ID">
+                                <option value="-1">No Tenant</option>
+                                <?php
+                                    $t = $tenants->fetch(PDO::FETCH_ASSOC);
+                                    while ($t) {
+                                        $selected = "";
+                                        if ($t['Tenant_ID'] ==  $property['Tenant_ID']) {
+                                            $selected = "selected";
+                                        }
+                                        echo '<option value="' . $t['Tenant_ID'] . '" ' . $selected . '>' . $t['Tenant_fName'] . ' ' . $t['Tenant_lName'] . '</option>';
+                                        $t = $tenants->fetch(PDO::FETCH_ASSOC);
+                                    }
+                                ?>
+                            </select>
                         </td>
                     </tr>
                         <td></td>

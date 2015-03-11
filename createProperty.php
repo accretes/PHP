@@ -36,8 +36,11 @@ if (empty($errorMessage)) {
     $description = $_POST['Property_Description'];
     $rent = $_POST['Property_Rent'];
     $bedrooms = $_POST['Property_NoOfRooms'];
-    
-    $id = $gateway->insertProperty($address, $description, $rent, $bedrooms);
+    $tenantId = $_POST['Tenant_ID']; 
+    if ($tenantid == -1) {
+        $tenantId = NULL;
+    }
+    $id = $gateway->insertProperty($address, $description, $rent, $bedrooms, $tenantId);
     
     $message = "Property created successfully";
 

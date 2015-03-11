@@ -63,6 +63,10 @@ $statement = $gateway->getPropertyById($id);
                         echo '<td>No. of Bedrooms</td>'
                         . '<td>' . $row['Property_NoOfRooms'] . '</td>';
                         echo '</tr>';
+                        echo '<tr>';
+                        echo '<td>Tenant</td>'
+                        . '<td>' . $row['Tenant_Name'] . '</td>';
+                        echo '</tr>';
                     ?>
                 </tbody>
             </table>

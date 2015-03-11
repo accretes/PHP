@@ -28,86 +28,34 @@ $tenantstatement = $tenantgateway->getTenants();
     <body>
         <div class="container">
             <?php require 'toolbar.php'; ?>
-            <?php 
-            if (isset($message)) {
-                echo '<p>'.$message.'</p>';
-            }
-            ?>
-            <h1 id="header">List of Properties</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th id="id">Address</th>
-                        <th id="id">Description</th>
-                        <th id="id">Monthly Rent</th>
-                        <th id="id">No. of bedrooms</th>
-                        <th id="options">Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $row = $statement->fetch(PDO::FETCH_ASSOC);
-                    while ($row) {
-                        echo '<td>' . $row['Property_Address'] . '</td>';
-                        echo '<td>' . $row['Property_Description'] . '</td>';
-                        echo '<td>' . $row['Property_Rent'] . '</td>';
-                        echo '<td>' . $row['Property_NoOfRooms'] . '</td>';
-                        echo '<td>'
-                        . '<a href="viewProperty.php?id='.$row['Property_ID'].'">View</a> '
-                        . ' | '        
-                        . '<a href="editPropertyForm.php?id='.$row['Property_ID'].'">Edit</a> '
-                        . ' | '          
-                        . '<a href="deleteProperty.php?id='.$row['Property_ID'].'">Delete</a> '
-                        . '</td>';
-                        echo '</tr>';
+            <?php require 'mainMenu.php' ?>
+            <div class="col-lg-6">
+                <h1>Welcome</h1>
+                <p>A property management company looks after the maintenance and rental 
+                    of properties for their owners. For each property, the company needs
+                    to record the address, a description, the monthly rent, and the 
+                    number of bedrooms. If the property is rented, the company needs to 
+                    record the following details of each of the tenants: name, age, 
+                    gender, email address, and mobile phone number. Tenants can only 
+                    rent one property at a time. If the property is rented, the company
+                    also needs to know the date the lease starts on and the duration of 
+                    the lease.</p>
 
-                        $row = $statement->fetch(PDO::FETCH_ASSOC);
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <p><a class="btn btn-primary" href="createPropertyForm.php">Create Property</a></p>
-            <br>
-            <h1 id="header">List of Tenants</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th id="id">Name</th>
-                        <th id="id">Age</th>
-                        <th id="id">Gender</th>
-                        <th id="id">Email</th>
-                        <th id="id">Phone</th>
-                        <th id="id">Property Address</th>
-                        <th id="id">Lease Information</th>
-                        <th id="options">Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $row = $tenantstatement->fetch(PDO::FETCH_ASSOC);
-                    while ($row) {
-                        echo '<td>' . $row['Tenant_fName'] . ' ' . $row['Tenant_lName'] . '</td>';
-                        echo '<td>' . $row['Tenant_Age'] . '</td>';
-                        echo '<td>' . $row['Tenant_Gender'] . '</td>';
-                        echo '<td>' . $row['Tenant_Email'] . '</td>';
-                        echo '<td>' . $row['Tenant_Phone'] . '</td>';
-                        echo '<td>' . '<a href="viewProperty.php?id='.$row['Property_ID'].'">View Property</a>';
-                        echo '<td>' . $row['Lease_ID'] . '</td>'; /*' <a href="viewProperty.php?id='.$row['Property_ID'].'">View Property</a>' */ 
-                        echo '<td>'
-                        . '<a href="viewTenant.php?id='.$row['Tenant_ID'].'">View</a> '
-                        . ' | '        
-                        . '<a href="editTenantForm.php?id='.$row['Tenant_ID'].'">Edit</a> '
-                        . ' | '          
-                        . '<a href="deleteTenant.php?id='.$row['Tenant_ID'].'">Delete</a> '
-                        . '</td>';
-                        echo '</tr>';
+                <p>The company organises properties into areas. For each area, the 
+                    company needs to be able to record the name of the area and a 
+                    description of the facilities available in the area. Each property 
+                    is assigned to a particular area and each area can have several 
+                    properties assigned to it.</p>
 
-                        $row = $tenantstatement->fetch(PDO::FETCH_ASSOC);
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <p><a class="btn btn-primary" href="createTenantForm.php">Create Tenant</a></p>        
+                <p>Finally, the company needs to record the details of the owners of 
+                    each property. For each owner, the name, address, mobile phone 
+                    number and email address needs to be stored. Each property can have 
+                    more than one owner, and each owner can own more than one property. 
+                    The company also needs to record how the rental income for a 
+                    property should be divided between the owners of the property. 
+                    In other words, what percentage of the rental income each owner 
+                    should receive.</p>
+            </div>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

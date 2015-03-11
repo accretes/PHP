@@ -1,5 +1,13 @@
 <?php
+require_once 'connection.php';
+require_once 'TenantTableGateway.php';
+
 require 'ensureUserLoggedIn.php';
+
+$conn = Connection::getInstance();
+$tenantGateway = new TenantTableGateway($conn);
+
+$tenants = $tenantGateway->getTenants();
 ?>
 <!DOCTYPE>
 <html>
@@ -19,6 +27,7 @@ require 'ensureUserLoggedIn.php';
     <body>
         <div class="container">
             <?php require 'toolbar.php'; ?>
+            <?php require 'mainMenu.php'; ?>
             <h1 id="header">Create Property Form</h1>
             
             
@@ -82,6 +91,21 @@ require 'ensureUserLoggedIn.php';
                                     }
                                     ?>
                                 </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tenant</td>
+                            <td>
+                                <select name="Tenant_ID">
+                                    <option value="-1">No Tenant</option>
+                                    <?php
+                                        $t = $tenants->fetch(PDO::FETCH_ASSOC);
+                                        while ($t) {
+                                            echo '<option value="' . $t['Tenant_ID'] . '">' . $t['Tenant_fName'] . ' ' . $t['Tenant_lName'] . '</option>';
+                                            $t = $tenants->fetch(PDO::FETCH_ASSOC);
+                                        }
+                                    ?>
+                                </select>
                             </td>
                         </tr>
                             <td></td>

@@ -11,7 +11,9 @@ class TenantTableGateway {
     }
     
     public function getTenants() {
-        $sqlQuery = "SELECT * FROM tenants";
+        $sqlQuery = "SELECT t.*, p.Property_Address as Property_Address"
+                . "FROM tenants t "
+                . "LEFT JOIN properties p ON t.Property_ID = p.Property_ID";
         
         $statement = $this->connection->prepare($sqlQuery);
         $status = $statement->execute();
