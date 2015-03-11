@@ -25,11 +25,17 @@ class PropertyTableGateway {
         return $statement;
     }
     
-    public function getPropertiesByTenantID() {
-        $sqlQuery = "SELECT * FROM properties";
+    public function getPropertiesByTenantID($tId) {
+        $sqlQuery = "SELECT p.*, t.Tenant_fName + ' ' + Tenant_lName as Tenant_Name"
+                . "FROM properties p "
+                . "LEFT JOIN tenants t ON t.Tenant_ID = p.Tenant_ID"
+                . "WHERE p.Tenant_ID = :tenantId";
         
+        $params = array(
+            "tenantId" => $tId
+        );
         $statement = $this->connection->prepare($sqlQuery);
-        $status = $statement->execute();
+        $status = $statement->execute($params);
         
         if (!$status) {
            die("Could not retrieve properties");
