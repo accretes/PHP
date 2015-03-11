@@ -22,9 +22,12 @@ $description = filter_input(INPUT_POST, 'Property_Description', FILTER_SANITIZE_
 $rent = filter_input(INPUT_POST, 'Property_Rent', FILTER_SANITIZE_INT);
 $bedrooms = filter_input(INPUT_POST, 'Property_NoOfRooms', FILTER_SANITIZE_INT);
 $id = filter_input(INPUT_POST, 'Property_ID', FILTER_SANITIZE_INT); 
+$tenantId = filter_input(INPUT_POST, 'Tenant_ID', FILTER_SANITIZE_INT); 
+if ($tenantid == -1) {
+        $tenantId = NULL;
+    }
 
-
-$gateway->updateProperty($id, $address, $description, $rent, $bedrooms);
+$gateway->updateProperty($id, $address, $description, $rent, $bedrooms, $tenantId);
 
 $message = "Property updated successfully";
 
