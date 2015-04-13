@@ -10,13 +10,23 @@ class PropertyTableGateway {
         $this->connection = $c;
     }
     
-    public function getProperties() {
+    public function getProperties($sortOrder, $filterName) {
         $sqlQuery = "SELECT p.*, t.Tenant_fName + ' ' + Tenant_lName as Tenant_Name"
                 . "FROM properties p "
-                . "LEFT JOIN tenants t ON t.Tenant_ID = p.Tenant_ID";
+                . "LEFT JOIN tenants t ON t.Tenant_ID = p.Tenant_ID" .
+                (($filterName == NULL) ? "" : "WHERE p.Property_Address LIKE :filterName") .
+                 " ORDER BY " . $sortOrder;
         
         $statement = $this->connection->prepare($sqlQuery);
-        $status = $statement->execute();
+        if ($filterName != NULL) {
+            $params = array(
+                "filterName" => "%" . $filterName . "%"
+            );
+            $status = $statement->execute($params);
+        }
+        else {
+            $status = $statement->execute();
+        }
         
         if (!$status) {
            die("Could not retrieve properties");
